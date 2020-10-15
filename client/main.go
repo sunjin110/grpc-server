@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"grpc-server/src/infra/grpc/proto/hello"
 	"log"
 
@@ -22,6 +21,9 @@ func main() {
 	client := hello.NewHelloClient(conn)
 	req := &hello.HelloRequest{Name: "sunjin"}
 	res, err := client.Hello(context.TODO(), req)
-	fmt.Printf("result:%#v \n", res)
-	fmt.Printf("error::%#v \n", err)
+	if err != nil {
+		panic(err)
+	}
+
+	log.Println("res message is ", res.Message)
 }
