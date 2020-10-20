@@ -1,0 +1,70 @@
+package bookrepo
+
+import (
+	"context"
+	"grpc-server/src/infra/mongodb/mcoll"
+	"reflect"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"gopkg.in/mgo.v2/bson"
+)
+
+var reflectType = reflect.TypeOf(&UserBook{})
+
+const (
+	// ThisCollName .
+	ThisCollName = "USER_BOOK"
+)
+
+// UserBook .
+type UserBook struct {
+	ID    primitive.ObjectID `bson:"_id,omitempty"`
+	Name  string             `bson:"name"`
+	Price int32              `bson:"price"`
+}
+
+func getColl(ctx context.Context) *mcoll.MColl {
+	return mcoll.New(ctx, "TEST_DB", ThisCollName)
+}
+
+// Insert .
+func Insert(ctx context.Context, name string) interface{} {
+
+	userBook := &UserBook{
+		Name: "name",
+	}
+
+	return getColl(ctx).InsertOne(userBook)
+}
+
+// UpdatePrice .
+func UpdatePrice(ctx context.Context, name string, price int32) int32 {
+	query := bson.M{"name": name}
+
+	update := bson.M{
+		"$set": bson.M{
+			"price": price,
+		},
+	}
+
+	return getColl(ctx).UpdateOne(query, update)
+}
+
+// Delete .
+func Delete(ctx context.Context, name string) int32 {
+	query := bson.M{"name": name}
+
+	return getColl(ctx).DeleteOne(query)
+}
+
+// Get .
+func Get(ctx context.Context, name string) *UserBook {
+
+	query := bson.M{"name": name}
+	result := getColl(ctx).FindOne(query, reflectType)
+	if result == nil {
+		return nil
+	}
+
+	return result.(*UserBook)
+}

@@ -1,21 +1,15 @@
-package main
+package test
 
 import (
 	"context"
-	"grpc-server/src/infra/grpc"
 	"grpc-server/src/infra/mongodb/mconn"
-	"log"
 )
 
-func main() {
-	log.Println("GrpcServer")
-
-	// setup
+// Setup .
+func Setup() {
+	// mongo
 	err := mconn.Setup(context.Background())
 	if err != nil {
 		panic(err)
 	}
-
-	// server run
-	grpc.Run()
 }

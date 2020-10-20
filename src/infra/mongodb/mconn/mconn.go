@@ -3,7 +3,7 @@ package mconn
 
 import (
 	"context"
-	"grpc-server/src/common/refutil"
+	"grpc-server/src/comm/refutil"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
