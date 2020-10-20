@@ -1,1 +1,5 @@
 # grpc-server
+
+## やってほしいこと
+
+CURDをgrpcurlでできること
