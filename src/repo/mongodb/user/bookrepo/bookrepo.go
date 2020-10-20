@@ -5,8 +5,8 @@ import (
 	"grpc-server/src/infra/mongodb/mcoll"
 	"reflect"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"gopkg.in/mgo.v2/bson"
 )
 
 var reflectType = reflect.TypeOf(&UserBook{})
@@ -28,10 +28,11 @@ func getColl(ctx context.Context) *mcoll.MColl {
 }
 
 // Insert .
-func Insert(ctx context.Context, name string) interface{} {
+func Insert(ctx context.Context, name string, price int32) interface{} {
 
 	userBook := &UserBook{
-		Name: "name",
+		Name:  name,
+		Price: price,
 	}
 
 	return getColl(ctx).InsertOne(userBook)

@@ -1,7 +1,9 @@
 package grpc
 
 import (
+	"grpc-server/src/ctrl/bookctrl"
 	"grpc-server/src/ctrl/helloctrl"
+	"grpc-server/src/infra/grpc/book"
 	"grpc-server/src/infra/grpc/proto/hello"
 	"log"
 	"net"
@@ -23,6 +25,7 @@ func Run() {
 	// grpc
 	server := grpc.NewServer()
 	hello.RegisterHelloServer(server, &helloctrl.HelloController{})
+	book.RegisterBookRpcServer(server, &bookctrl.BookController{})
 
 	// grpcurlでアクセスできるようにする
 	reflection.Register(server)

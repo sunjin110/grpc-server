@@ -8,9 +8,32 @@ import "comm/comm.proto";
 
 service BookRpc {
     rpc Create(CreateRequest) returns (comm.Empty) {}
+
+    rpc UpdatePrice(UpdateRequest) returns (comm.Empty) {}
+
+    rpc Delete(DeleteRequest) returns (comm.Empty) {}
+
+    rpc List(comm.Empty) returns (ListReply) {}
 }
 
 message CreateRequest {
+    string name = 1;
+    int32 price = 2;
+}
+
+message UpdateRequest {
+    int32 price = 1;
+}
+
+message DeleteRequest {
+    string name = 1;
+}
+
+message ListReply {
+    repeated BookInfo book_info_list = 1;
+}
+
+message BookInfo {
     string name = 1;
     int32 price = 2;
 }
