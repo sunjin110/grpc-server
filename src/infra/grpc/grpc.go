@@ -7,6 +7,7 @@ import (
 	"net"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 // Run .
@@ -22,6 +23,9 @@ func Run() {
 	// grpc
 	server := grpc.NewServer()
 	hello.RegisterHelloServer(server, &helloctrl.HelloController{})
+
+	// grpcurlでアクセスできるようにする
+	reflection.Register(server)
 
 	server.Serve(port)
 }
