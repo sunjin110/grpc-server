@@ -1,7 +1,7 @@
 package grpc
 
 import (
-	"grpc-server/src/controller/helloctrl"
+	"grpc-server/src/ctrl/helloctrl"
 	"grpc-server/src/infra/grpc/proto/hello"
 	"log"
 	"net"
