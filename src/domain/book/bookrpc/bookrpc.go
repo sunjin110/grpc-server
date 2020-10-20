@@ -7,6 +7,7 @@ package bookrpc
 import (
 	"context"
 	"grpc-server/src/domain/book/bookcompo"
+	"grpc-server/src/infra/grpc/book"
 	"grpc-server/src/repo/mongodb/user/bookrepo"
 )
 
@@ -43,3 +44,8 @@ func Delete(ctx context.Context, name string) int32 {
 }
 
 // List 本の一覧を取得
+func List(ctx context.Context) *book.ListReply {
+
+	userBookList := bookrepo.GetAll(ctx)
+	return bookcompo.CreateListReply(userBookList)
+}

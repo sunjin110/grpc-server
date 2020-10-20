@@ -22,7 +22,8 @@ message CreateRequest {
 }
 
 message UpdateRequest {
-    int32 price = 1;
+    string name = 1;
+    int32 price = 2;
 }
 
 message DeleteRequest {

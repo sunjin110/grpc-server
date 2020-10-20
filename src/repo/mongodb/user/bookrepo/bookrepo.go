@@ -69,3 +69,13 @@ func Get(ctx context.Context, name string) *UserBook {
 
 	return result.(*UserBook)
 }
+
+// GetAll .
+func GetAll(ctx context.Context) []*UserBook {
+	query := bson.M{}
+	result := getColl(ctx).Find(query, reflectType)
+	if result == nil {
+		return nil
+	}
+	return result.([]*UserBook)
+}

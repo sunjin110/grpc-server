@@ -18,15 +18,17 @@ func (*BookController) Create(ctx context.Context, req *book.CreateRequest) (*co
 
 // UpdatePrice 本の価格の変更
 func (*BookController) UpdatePrice(ctx context.Context, req *book.UpdateRequest) (*comm.Empty, error) {
-	return nil, nil
+	bookrpc.UpdatePrice(ctx, req.Name, req.Price)
+	return &comm.Empty{}, nil
 }
 
 // Delete 本の削除
 func (*BookController) Delete(ctx context.Context, req *book.DeleteRequest) (*comm.Empty, error) {
-	return nil, nil
+	bookrpc.Delete(ctx, req.Name)
+	return &comm.Empty{}, nil
 }
 
 // List リスト
 func (*BookController) List(ctx context.Context, req *comm.Empty) (*book.ListReply, error) {
-	return nil, nil
+	return bookrpc.List(ctx), nil
 }

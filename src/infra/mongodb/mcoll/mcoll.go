@@ -2,11 +2,13 @@ package mcoll
 
 import (
 	"context"
+	"grpc-server/src/comm/refutil"
 	"grpc-server/src/infra/mongodb/mconn"
 	"reflect"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 // MColl .
@@ -61,6 +63,12 @@ func (c *MColl) FindOne(query bson.M, reflectType reflect.Type) interface{} {
 	return checkAndReflectSingleResult(res, reflectType)
 }
 
+// Find .
+func (c *MColl) Find(query bson.M, reflectType reflect.Type) interface{} {
+	reflectSlice := refutil.CreateSlice(reflectType)
+	return reflectionFind(c.ctx, c.col, query, reflectSlice, reflectType)
+}
+
 func checkAndReflectSingleResult(result *mongo.SingleResult, reflectType reflect.Type) interface{} {
 	// 検索がヒットしない場合、エラーとなる。その場合、nilを返す。
 	if result.Err() != nil && result.Err().Error() == "mongo: no documents in result" {
@@ -78,4 +86,36 @@ func checkAndReflectSingleResult(result *mongo.SingleResult, reflectType reflect
 	}
 
 	return v.Elem().Interface()
+}
+
+// リフレクションタイプでデータを取得する
+func reflectionFind(ctx context.Context, collection *mongo.Collection, query interface{}, reflectSlice reflect.Value, reflectType reflect.Type, opts ...*options.FindOptions) interface{} {
+	cur, err := collection.Find(ctx, query, opts...)
+	defer func() {
+		if cur != nil {
+			cur.Close(ctx)
+		}
+		if err2 := recover(); err2 != nil {
+			panic(err2)
+		}
+	}()
+	if err != nil {
+		panic(err)
+	}
+
+	for cur.Next(ctx) {
+		v := reflect.New(reflectType)
+		err = cur.Decode(v.Interface())
+		if err != nil {
+			panic(err)
+		}
+		reflectSlice.Set(reflect.Append(reflectSlice, v.Elem()))
+	}
+
+	err = cur.Err()
+	if err != nil {
+		panic(err)
+	}
+
+	return reflectSlice.Interface()
 }
