@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option go_package = "grpc-server/src/infra/grpc/book";
+
+package book;
+
+import "comm/comm.proto";
+
+service BookRpc {
+    rpc Create(CreateRequest) returns (comm.Empty) {}
+}
+
+message CreateRequest {
+    string name = 1;
+    int32 price = 2;
+}
