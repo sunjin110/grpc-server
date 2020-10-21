@@ -7,7 +7,7 @@ package bookrpc
 import (
 	"context"
 	"grpc-server/src/domain/book/bookcompo"
-	"grpc-server/src/infra/grpc/book"
+	"grpc-server/src/infra/grpc/proto/book"
 	"grpc-server/src/repo/mongodb/user/bookrepo"
 )
 

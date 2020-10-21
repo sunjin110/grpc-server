@@ -3,7 +3,7 @@ package bookctrl
 import (
 	"context"
 	"grpc-server/src/domain/book/bookrpc"
-	"grpc-server/src/infra/grpc/book"
+	"grpc-server/src/infra/grpc/proto/book"
 	"grpc-server/src/infra/grpc/proto/comm"
 )
 

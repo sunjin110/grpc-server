@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "grpc-server/src/infra/grpc/book";
+option go_package = "grpc-server/src/infra/grpc/proto/book";
 
 package book;
 

@@ -5,7 +5,7 @@ package bookcompo
 
 import (
 	"errors"
-	"grpc-server/src/infra/grpc/book"
+	"grpc-server/src/infra/grpc/proto/book"
 	"grpc-server/src/repo/mongodb/user/bookrepo"
 )
 
