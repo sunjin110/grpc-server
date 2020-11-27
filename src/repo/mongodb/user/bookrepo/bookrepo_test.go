@@ -23,7 +23,7 @@ func Test(t *testing.T) {
 
 			ctx := context.Background()
 			// insert
-			bookrepo.Insert(ctx, "book name", 100)
+			bookrepo.Insert(ctx, "book name", 100, "user name")
 		})
 
 	})

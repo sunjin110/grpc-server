@@ -21,6 +21,7 @@ type UserBook struct {
 	ID    primitive.ObjectID `bson:"_id,omitempty"`
 	Name  string             `bson:"name"`
 	Price int32              `bson:"price"`
+	User  string             `bson:"user"`
 }
 
 func getColl(ctx context.Context) *mcoll.MColl {
@@ -28,11 +29,12 @@ func getColl(ctx context.Context) *mcoll.MColl {
 }
 
 // Insert .
-func Insert(ctx context.Context, name string, price int32) interface{} {
+func Insert(ctx context.Context, name string, price int32, user string) interface{} {
 
 	userBook := &UserBook{
 		Name:  name,
 		Price: price,
+		User:  user,
 	}
 
 	return getColl(ctx).InsertOne(userBook)

@@ -12,7 +12,7 @@ import (
 )
 
 // Create 本の作成
-func Create(ctx context.Context, name string, price int32) bool {
+func Create(ctx context.Context, name string, price int32, user string) bool {
 
 	// check
 	err := bookcompo.CheckBookParam(name, price)
@@ -21,7 +21,7 @@ func Create(ctx context.Context, name string, price int32) bool {
 	}
 
 	// create
-	bookrepo.Insert(ctx, name, price)
+	bookrepo.Insert(ctx, name, price, user)
 	return true
 }
 

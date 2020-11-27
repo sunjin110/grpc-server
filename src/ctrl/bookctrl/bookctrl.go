@@ -12,7 +12,7 @@ type BookController struct{}
 
 // Create 本の作成
 func (*BookController) Create(ctx context.Context, req *book.CreateRequest) (*comm.Empty, error) {
-	bookrpc.Create(ctx, req.Name, req.Price)
+	bookrpc.Create(ctx, req.Name, req.Price, req.User)
 	return &comm.Empty{}, nil
 }
 

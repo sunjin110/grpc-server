@@ -32,6 +32,7 @@ func CreateListReply(userBookList []*bookrepo.UserBook) *book.ListReply {
 		bookInfo := &book.BookInfo{
 			Name:  userBook.Name,
 			Price: userBook.Price,
+			User:  userBook.User,
 		}
 
 		bookInfoList = append(bookInfoList, bookInfo)

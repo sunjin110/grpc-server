@@ -18,7 +18,8 @@ func Setup(ctx context.Context) error {
 
 	// some setting
 	opt := &options.ClientOptions{
-		Hosts:       []string{"localhost:27017"},
+		Hosts: []string{"localhost:27017"},
+		// Hosts:       []string{"mongodb-primary:27017", "mongodb-secondary:27018", "mongodb-arbiter:27019"},
 		MaxPoolSize: refutil.PointUint64(10),
 	}
 
