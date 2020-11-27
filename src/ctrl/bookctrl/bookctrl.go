@@ -24,7 +24,7 @@ func (*BookController) UpdatePrice(ctx context.Context, req *book.UpdateRequest)
 
 // Delete 本の削除
 func (*BookController) Delete(ctx context.Context, req *book.DeleteRequest) (*comm.Empty, error) {
-	bookrpc.Delete(ctx, req.Name)
+	bookrpc.Delete(ctx, req.Name, req.User)
 	return &comm.Empty{}, nil
 }
 

@@ -13,8 +13,6 @@ service BookRpc {
 
     rpc Delete(DeleteRequest) returns (comm.Empty) {}
 
-    // rpc DeleteLog(DeleteLogRequest) returns (comm.Empty) {}
-
     rpc List(comm.Empty) returns (ListReply) {}
 }
 
@@ -31,11 +29,8 @@ message UpdateRequest {
 
 message DeleteRequest {
     string name = 1;
+    string user = 2;
 }
-
-// message DeleteLogRequest {
-//     string name = 1;
-// }
 
 message ListReply {
     repeated BookInfo book_info_list = 1;

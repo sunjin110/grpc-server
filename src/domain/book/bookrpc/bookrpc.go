@@ -39,8 +39,32 @@ func UpdatePrice(ctx context.Context, name string, price int32) int32 {
 }
 
 // Delete 本の削除
-func Delete(ctx context.Context, name string) int32 {
-	return bookrepo.Delete(ctx, name)
+// func Delete(ctx context.Context, name string, user string) int32 {
+
+// 	// create
+// 	bookrepo.InsertLog(ctx, name, user)
+
+// 	return bookrepo.Delete(ctx, name)
+// }
+
+// Delete book delete
+func Delete(ctx context.Context, name string, user string) bool {
+
+	// delete book
+	deleteResult := bookrepo.Delete(ctx, name)
+	if deleteResult == 0 {
+		// error
+		panic("本の削除に失敗しました")
+	}
+
+	// create
+	logResult := bookrepo.InsertLog(ctx, name, user)
+	if logResult == 0 {
+		// error
+		panic("削除ログの追加に失敗しました")
+	}
+
+	return true
 }
 
 // List 本の一覧を取得

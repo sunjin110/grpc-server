@@ -57,6 +57,16 @@ func (c *MColl) DeleteOne(query bson.M) int32 {
 	return int32(res.DeletedCount)
 }
 
+// InsertLogOne 戻り値は_id
+func (c *MColl) InsertLogOne(data interface{}) interface{} {
+	res, err := c.col.InsertOne(c.ctx, data)
+
+	if err != nil {
+		panic(err)
+	}
+	return res.InsertedID
+}
+
 // FindOne .
 func (c *MColl) FindOne(query bson.M, reflectType reflect.Type) interface{} {
 	res := c.col.FindOne(c.ctx, query)

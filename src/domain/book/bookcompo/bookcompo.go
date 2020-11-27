@@ -23,6 +23,19 @@ func CheckBookParam(name string, price int32) error {
 	return nil
 }
 
+// func CheckLogParam(name string, user string) error {
+
+// 	if name == "" {
+// 		return errors.New("本の名前が空です")
+// 	}
+
+// 	if name == "" {
+// 		return errors.New("ユーザー名が空です")
+// 	}
+
+// 	return nil
+// }
+
 // CreateListReply .
 func CreateListReply(userBookList []*bookrepo.UserBook) *book.ListReply {
 

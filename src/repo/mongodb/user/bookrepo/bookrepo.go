@@ -14,6 +14,8 @@ var reflectType = reflect.TypeOf(&UserBook{})
 const (
 	// ThisCollName .
 	ThisCollName = "USER_BOOK"
+	// LogCollName .
+	LogCollName = "DELETE_LOG"
 )
 
 // UserBook .
@@ -24,8 +26,19 @@ type UserBook struct {
 	User  string             `bson:"user"`
 }
 
+// DeleteLog .
+type DeleteLog struct {
+	ID   primitive.ObjectID `bson:"_id,omitempty"`
+	Name string             `bson:"name"`
+	User string             `bson:"user"`
+}
+
 func getColl(ctx context.Context) *mcoll.MColl {
 	return mcoll.New(ctx, "TEST_DB", ThisCollName)
+}
+
+func getLogColl(ctx context.Context) *mcoll.MColl {
+	return mcoll.New(ctx, "TEST_DB", LogCollName)
 }
 
 // Insert .
@@ -38,6 +51,17 @@ func Insert(ctx context.Context, name string, price int32, user string) interfac
 	}
 
 	return getColl(ctx).InsertOne(userBook)
+}
+
+// InsertLog .
+func InsertLog(ctx context.Context, name string, user string) interface{} {
+
+	deleteLog := &DeleteLog{
+		Name: name,
+		User: user,
+	}
+
+	return getColl(ctx).InsertLogOne(deleteLog)
 }
 
 // UpdatePrice .
