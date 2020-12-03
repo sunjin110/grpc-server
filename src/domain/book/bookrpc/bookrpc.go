@@ -9,6 +9,7 @@ import (
 	"grpc-server/src/domain/book/bookcompo"
 	"grpc-server/src/infra/grpc/proto/book"
 	"grpc-server/src/repo/mongodb/user/bookrepo"
+	"grpc-server/src/repo/mongodb/user/deletelog"
 )
 
 // Create 本の作成
@@ -38,17 +39,15 @@ func UpdatePrice(ctx context.Context, name string, price int32) int32 {
 	return bookrepo.UpdatePrice(ctx, name, price)
 }
 
-// Delete 本の削除
-// func Delete(ctx context.Context, name string, user string) int32 {
-
-// 	// create
-// 	bookrepo.InsertLog(ctx, name, user)
-
-// 	return bookrepo.Delete(ctx, name)
-// }
 
 // Delete book delete
 func Delete(ctx context.Context, name string, user string) bool {
+
+	// check
+	err := bookcompo.CheckLogParam(name, user)
+	if err != nil {
+		panic(err)
+	}
 
 	// delete book
 	deleteResult := bookrepo.Delete(ctx, name)
@@ -58,7 +57,7 @@ func Delete(ctx context.Context, name string, user string) bool {
 	}
 
 	// create
-	logResult := bookrepo.InsertLog(ctx, name, user)
+	logResult := deletelog.Insert(ctx, name, user)
 	if logResult == 0 {
 		// error
 		panic("削除ログの追加に失敗しました")
@@ -72,4 +71,11 @@ func List(ctx context.Context) *book.ListReply {
 
 	userBookList := bookrepo.GetAll(ctx)
 	return bookcompo.CreateListReply(userBookList)
+}
+
+// DeleteLogList 削除ログの一覧を取得
+func DeleteLogList(ctx context.Context) *book.DeleteLogListReply {
+
+	deleteLogList := deletelog.GetAll(ctx)
+	return bookcompo.CreateDeleteLogListReply(deleteLogList)
 }

@@ -32,3 +32,8 @@ func (*BookController) Delete(ctx context.Context, req *book.DeleteRequest) (*co
 func (*BookController) List(ctx context.Context, req *comm.Empty) (*book.ListReply, error) {
 	return bookrpc.List(ctx), nil
 }
+
+// DeleteLogList リスト
+func (*BookController) DeleteLogList(ctx context.Context, req *comm.Empty) (*book.DeleteLogListReply, error) {
+	return bookrpc.DeleteLogList(ctx), nil
+}

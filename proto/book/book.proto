@@ -14,6 +14,8 @@ service BookRpc {
     rpc Delete(DeleteRequest) returns (comm.Empty) {}
 
     rpc List(comm.Empty) returns (ListReply) {}
+
+    rpc DeleteLogList(comm.Empty) returns (DeleteLogListReply) {}
 }
 
 message CreateRequest {
@@ -40,4 +42,13 @@ message BookInfo {
     string name = 1;
     int32 price = 2;
     string user = 3;
+}
+
+message DeleteLogListReply {
+    repeated DeleteLogInfo log_info_list = 1;
+}
+
+message DeleteLogInfo {
+    string name = 1;
+    string user = 2;
 }
