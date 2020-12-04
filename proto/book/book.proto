@@ -15,8 +15,9 @@ service BookRpc {
 
     rpc List(comm.Empty) returns (ListReply) {}
 
-    rpc DeleteLogList(comm.Empty) returns (DeleteLogListReply) {}
+    rpc BookDeleteHistoryList(comm.Empty) returns (BookDeleteHistoryListReply) {}
 }
+
 
 message CreateRequest {
     string name = 1;
@@ -24,19 +25,23 @@ message CreateRequest {
     string user = 3;
 }
 
+
 message UpdateRequest {
     string name = 1;
     int32 price = 2;
 }
+
 
 message DeleteRequest {
     string name = 1;
     string user = 2;
 }
 
+
 message ListReply {
     repeated BookInfo book_info_list = 1;
 }
+
 
 message BookInfo {
     string name = 1;
@@ -44,11 +49,11 @@ message BookInfo {
     string user = 3;
 }
 
-message DeleteLogListReply {
-    repeated DeleteLogInfo log_info_list = 1;
-}
 
-message DeleteLogInfo {
+message BookDeleteHistoryListReply {
+    repeated BookDeleteHistoryInfo book_delete_history_list = 1;
+}
+message BookDeleteHistoryInfo {
     string name = 1;
     string user = 2;
 }

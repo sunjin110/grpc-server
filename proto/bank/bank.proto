@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+option go_package = "grpc-server/src/infra/grpc/proto/bank";
+
+package bank;
+
+import "comm/comm.proto";
+
+service BankRpc {
+    rpc CreateBankAccount(BankAccountRequest) returns (comm.Empty) {}
+
+    rpc DeleteBankAccount(BankAccountRequest) returns (comm.Empty) {}
+
+    rpc ListBankAccount(comm.Empty) returns (ListBankAccountReply) {}
+
+    rpc IncUserMoney(UserMoneyRequest) returns (comm.Empty) {}
+
+    rpc DecUserMoney(UserMoneyRequest) returns (comm.Empty) {}
+
+    rpc TranferUserMoney(TranferUserMoneyRequest) returns (comm.Empty) {}
+
+    rpc LookUserMoney(BankAccountRequest) returns (LookUserMoneyReply) {}
+
+    rpc ListUserCashFlow(comm.Empty) returns (ListUserCashFlowReply) {}
+}
+
+
+// 口座の作成/削除
+message BankAccountRequest {
+    string user = 1;
+}
+
+
+// 登録されている口座をみる
+message ListBankAccountReply {
+    repeated BankAccountInfo bank_account_info_list = 1;
+}
+message BankAccountInfo {
+    string user = 1;
+    int32 money = 2;
+}
+
+
+// 入金/出金
+message UserMoneyRequest {
+    string user = 1;
+    int32 money = 2;
+}
+
+
+// 送金
+message TranferUserMoneyRequest {
+    string userfrom = 1;
+    string userto = 2;
+    int32 money = 3;
+}
+
+
+// 残高を確認
+message LookUserMoneyReply {
+    BankAccountInfo bank_account_info = 2;
+    // repeated BankAccountInfo account_info = 2;
+}
+
+
+
+// 活動記録を確認
+message ListUserCashFlowReply {
+    repeated UserCashFlowInfo user_cash_flow_info_list = 1;
+}
+message UserCashFlowInfo {
+    string user = 1;
+    string action = 2;
+    int32 money = 3;
+}

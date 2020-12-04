@@ -6,8 +6,8 @@ package bookcompo
 import (
 	"errors"
 	"grpc-server/src/infra/grpc/proto/book"
+	"grpc-server/src/repo/mongodb/log/booklog"
 	"grpc-server/src/repo/mongodb/user/bookrepo"
-	"grpc-server/src/repo/mongodb/user/deletelog"
 )
 
 // CheckBookParam パラメータがおかしくないかをチェックする
@@ -58,21 +58,21 @@ func CreateListReply(userBookList []*bookrepo.UserBook) *book.ListReply {
 	}
 }
 
-// CreateDeleteLogListReply .
-func CreateDeleteLogListReply(deleteLogList []*deletelog.DeleteLog) *book.DeleteLogListReply {
+// CreateBookDeleteHistoryListReply .
+func CreateBookDeleteHistoryListReply(bookDeleteHistoryList []*booklog.BookDeleteHistory) *book.BookDeleteHistoryListReply {
 
-	var deleteLogInfoList []*book.DeleteLogInfo
-	for _, deleteLog := range deleteLogList {
+	var bookDeleteHistoryInfoList []*book.BookDeleteHistoryInfo
+	for _, bookDeleteHistory := range bookDeleteHistoryList {
 
-		deleteLogInfo := &book.DeleteLogInfo{
-			Name: deleteLog.Name,
-			User: deleteLog.User,
+		bookDeleteHistoryInfo := &book.BookDeleteHistoryInfo{
+			Name: bookDeleteHistory.Name,
+			User: bookDeleteHistory.User,
 		}
 
-		deleteLogInfoList = append(deleteLogInfoList, deleteLogInfo)
+		bookDeleteHistoryInfoList = append(bookDeleteHistoryInfoList, bookDeleteHistoryInfo)
 	}
 
-	return &book.DeleteLogListReply{
-		LogInfoList: deleteLogInfoList,
+	return &book.BookDeleteHistoryListReply{
+		BookDeleteHistoryList: bookDeleteHistoryInfoList,
 	}
 }

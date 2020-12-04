@@ -1,4 +1,4 @@
-package deletelog
+package booklog
 
 import (
 	"context"
@@ -9,15 +9,15 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-var reflectType = reflect.TypeOf(&DeleteLog{})
+var reflectType = reflect.TypeOf(&BookDeleteHistory{})
 
 const (
 	// ThisCollName .
 	ThisCollName = "DELETE_LOG"
 )
 
-// DeleteLog .
-type DeleteLog struct {
+// BookDeleteHistory .
+type BookDeleteHistory struct {
 	ID   primitive.ObjectID `bson:"_id,omitempty"`
 	Name string             `bson:"name"`
 	User string             `bson:"user"`
@@ -30,16 +30,16 @@ func getColl(ctx context.Context) *mcoll.MColl {
 // Insert .
 func Insert(ctx context.Context, name string, user string) interface{} {
 
-	deleteLog := &DeleteLog{
+	bookDeleteHistory := &BookDeleteHistory{
 		Name: name,
 		User: user,
 	}
 
-	return getColl(ctx).InsertOne(deleteLog)
+	return getColl(ctx).InsertOne(bookDeleteHistory)
 }
 
 // Get .
-func Get(ctx context.Context, name string) *DeleteLog {
+func Get(ctx context.Context, name string) *BookDeleteHistory {
 
 	query := bson.M{"name": name}
 	result := getColl(ctx).FindOne(query, reflectType)
@@ -47,15 +47,15 @@ func Get(ctx context.Context, name string) *DeleteLog {
 		return nil
 	}
 
-	return result.(*DeleteLog)
+	return result.(*BookDeleteHistory)
 }
 
 // GetAll .
-func GetAll(ctx context.Context) []*DeleteLog {
+func GetAll(ctx context.Context) []*BookDeleteHistory {
 	query := bson.M{}
 	result := getColl(ctx).Find(query, reflectType)
 	if result == nil {
 		return nil
 	}
-	return result.([]*DeleteLog)
+	return result.([]*BookDeleteHistory)
 }

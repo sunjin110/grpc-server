@@ -33,7 +33,7 @@ func (*BookController) List(ctx context.Context, req *comm.Empty) (*book.ListRep
 	return bookrpc.List(ctx), nil
 }
 
-// DeleteLogList リスト
-func (*BookController) DeleteLogList(ctx context.Context, req *comm.Empty) (*book.DeleteLogListReply, error) {
-	return bookrpc.DeleteLogList(ctx), nil
+// BookDeleteHistoryList リスト
+func (*BookController) BookDeleteHistoryList(ctx context.Context, req *comm.Empty) (*book.BookDeleteHistoryListReply, error) {
+	return bookrpc.BookDeleteHistoryList(ctx), nil
 }

@@ -24,12 +24,9 @@ type UserBook struct {
 	User  string             `bson:"user"`
 }
 
-
-
 func getColl(ctx context.Context) *mcoll.MColl {
 	return mcoll.New(ctx, "TEST_DB", ThisCollName)
 }
-
 
 // Insert .
 func Insert(ctx context.Context, name string, price int32, user string) interface{} {
@@ -42,7 +39,6 @@ func Insert(ctx context.Context, name string, price int32, user string) interfac
 
 	return getColl(ctx).InsertOne(userBook)
 }
-
 
 // UpdatePrice .
 func UpdatePrice(ctx context.Context, name string, price int32) int32 {
